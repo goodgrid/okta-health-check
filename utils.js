@@ -1,6 +1,21 @@
 import { oktaPublic } from "./oktaApi.js";
 import config from "./config.js";
 
+export const debug = (msg) => {
+    
+    if (config.debug) {
+
+        console.log(formatDate(new Date()), msg)
+
+    }
+
+}
+
+const formatDate = (dt) => {
+    return `${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}T${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+
+}
+
 export const getEvents = async (filter) => {
     const response = await oktaPublic.get("logs",{
         params: {

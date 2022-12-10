@@ -3,6 +3,8 @@ import { oktaInternal } from "../oktaApi.js";
 
 export const adminData = async () => {
 
+    console.log(`Getting Admin Data`)
+
     const { data: admins } = await oktaInternal.get(`privileges/admins`)
 
     return Promise.all(admins.map(async admin => {

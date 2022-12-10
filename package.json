@@ -6,6 +6,7 @@
   "type": "module",
   "dependencies": {
     "axios": "^0.27.2",
+    "bottleneck": "^2.19.5",
     "csv-stringify": "^6.2.0",
     "docx-templates": "^4.9.2"
   }

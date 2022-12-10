@@ -4,6 +4,9 @@ import { friendlyDate } from "../utils.js";
 
 
 const orgData = async () => {
+
+    console.log(`Getting Org Data`)
+
     const { data : org} = await oktaPublic.get("org")
 
 

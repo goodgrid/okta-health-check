@@ -58,6 +58,9 @@ const warnings = {
 }
 
 const healthData = async () => {
+
+    console.log(`Getting Health Data`)
+
     const response = await oktaInternal.get("v1/securityHealthCheck")
 
        return response.data.map(item => {

@@ -1,4 +1,6 @@
 import axios from "axios"
+import Bottleneck from "bottleneck";
+import { debug } from "./utils.js";
 import config from "./config.js"
 
 export const oktaPublic = axios.create({
@@ -6,6 +8,24 @@ export const oktaPublic = axios.create({
     headers: {
         "Authorization": `SSWS ${config.oktaApiToken}`
 	}
+})
+
+const limiter = new Bottleneck({
+    minTime: config.oktaRequestDelayMs
+  });
+
+oktaPublic.interceptors.request.use(async reqConfig => {
+    try {
+        await limiter.schedule(() => {
+            debug(`Throttling request to ${reqConfig.url}`)
+        });
+
+        return reqConfig
+    } catch (error) {
+        console.log("Error while throttling")
+    }
+}, error => {
+    console.log("Error while thottling")
 })
 
 
@@ -16,19 +36,23 @@ oktaPublic.interceptors.response.use(async response => {
     const next = nextPage(response.headers.link)
 
     if (next !== undefined) {
-        if (config.debug) console.log(`next request needed`, response.request.path, next)
+        debug(`next request needed`, response.request.path, next)
 
         try {
+            
             const nextResponse = await oktaPublic.get(next)
             totalData = totalData.concat(nextResponse.data)
         } catch(err) {
-            console.error(`ERROR: ${err.response.data.errorSummary}. Failed request was ${err.request.path}`)
+            console.error(error)
         }
     }
 
     response.data = totalData
     return response;
 });
+
+
+
 
 export const oktaInternal = axios.create({
     baseURL: `https://${config.oktaInstanceName}-admin.okta.com/api/internal/`,
@@ -61,3 +85,4 @@ const nextPage = (linkHeaders) => {
     return nextLink.split(";")[0].trim().replace(/[<>]/g,"")
 
 }
+

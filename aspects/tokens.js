@@ -6,6 +6,8 @@ import { friendlyDate } from "../utils.js";
 
 export const tokenData = async () => {
 
+    console.log(`Getting Token Data`)
+
     const { data: tokens } = await oktaInternal.get(`tokens`)
 
     return tokens.map(token => {

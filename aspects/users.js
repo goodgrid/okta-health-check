@@ -5,6 +5,9 @@ import config from "../config.js";
 
 
 const userData = async () => {
+
+    console.log(`Getting User Data`)
+
     const response = await oktaPublic.get("users")
 
     return response.data.map(user => {
@@ -18,6 +21,7 @@ const userData = async () => {
         }
     })
     .filter(user => (user.status != 'ACTIVE' || user.lastActive >= config.alerts.usersInactiveDays))
+    .sort(({lastActive:a}, {lastActive:b}) => b-a)
 
     
 
