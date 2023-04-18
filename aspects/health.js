@@ -54,6 +54,10 @@ const warnings = {
         title: "No use of ThreatInsight",
         description: "Okta ThreatInsight maintains an evolving list of IPs that exhibit suspicious behavior. Okta recommends enabling ThreatInsight to log and block authentication attempts from these suspicious IPs"
     },
+    REPORT_SUSPICIOUS_ACTIVITY: {
+        title: "Users are not enabled to report suspicious activity",
+        description: "Okta recommends that users are enabled to report suspicious activity when they receive an account activity email."
+    }
 
 }
 

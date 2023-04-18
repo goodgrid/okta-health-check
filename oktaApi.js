@@ -4,7 +4,7 @@ import { debug } from "./utils.js";
 import config from "./config.js"
 
 export const oktaPublic = axios.create({
-    baseURL: `https://${config.oktaInstanceName}.okta.com/api/v1`,
+    baseURL: `https://${config.oktaInstanceName}.${config.oktaDomain}/api/v1`,
     headers: {
         "Authorization": `SSWS ${config.oktaApiToken}`
 	}
@@ -55,14 +55,14 @@ oktaPublic.interceptors.response.use(async response => {
 
 
 export const oktaInternal = axios.create({
-    baseURL: `https://${config.oktaInstanceName}-admin.okta.com/api/internal/`,
+    baseURL: `https://${config.oktaInstanceName}-admin.${config.oktaDomain}/api/internal/`,
     headers: {
         "Authorization": `SSWS ${config.oktaApiToken}`
 	}
 })
 
 export const oktaSage = axios.create({
-    baseURL: `https://${config.oktaInstanceName}-admin.okta.com/sage/api/v1/`,
+    baseURL: `https://${config.oktaInstanceName}-admin.${config.oktaDomain}/sage/api/v1/`,
     headers: {
         "Authorization": `SSWS ${config.oktaApiToken}`
 	}
